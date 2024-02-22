@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation with Bootstrap</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+        }
+        .btn-primary {
+             background-color: rgb(255, 70, 70);
+             border-color: rgb(255, 70, 70);
+             
+        }
+        .btn-primary:hover {
+             background-color: rgb(121, 33, 33);
+             border-color: rgb(121, 33, 33);
+             
+        }
+        #firstName {
+            border-color: rgb(121, 33, 33);
+        }
+        #firstName:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+        #lastName {
+            border-color: rgb(121, 33, 33);
+        }
+        #age {
+            border-color: rgb(121, 33, 33);
+        }
+        #email {
+            border-color: rgb(121, 33, 33);
+        }
+        #lastName:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+        #email:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+        #signUpPassword {
+            border-color: rgb(121, 33, 33);
+        }
+        #signUpPassword:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+        #age:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Sign Up</h1>
+        <br>
+        <form id="signUpForm">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName">
+                <p id="firstNameError" class="error"></p>
+            </div>
+    
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName">
+                <p id="lastNameError" class="error"></p>
+            </div>
+    
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email">
+                <p id="emailError" class="error"></p>
+            </div>
+    
+            <div class="form-group">
+                <label for="signUpPassword">Password:</label>
+                <input type="password" class="form-control" id="signUpPassword" name="password">
+                <p id="signUpPasswordError" class="error"></p>
+            </div>
+    
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age">
+                <p id="ageError" class="error"></p>
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const signUpForm = document.getElementById('signUpForm');
+        signUpForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validateSignUpForm();
+        });
+
+        function validateSignUpForm() {
+            const fname = document.getElementById('firstName').value;
+            const lname = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('signUpPassword').value;
+            const age = document.getElementById('age').value;
+
+            let isValid = true;
+
+            if (fname === '') {
+                document.getElementById('firstNameError').textContent = 'First name is required';
+                isValid = false;
+            } else {
+                document.getElementById('firstNameError').textContent = '';
+            }
+            
+            if (lname === '') {
+                document.getElementById('lastNameError').textContent = 'Last name is required';
+                isValid = false;
+            } else {
+                document.getElementById('lastNameError').textContent = '';
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Email is not valid';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('signUpPasswordError').textContent = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character';
+                isValid = false;
+            } else {
+                document.getElementById('signUpPasswordError').textContent = '';
+            }
+
+            if (age < 13) {
+                document.getElementById('ageError').textContent = 'You must be at least 13 years old';
+                isValid = false;
+            } else {
+                document.getElementById('ageError').textContent = '';
+            }
+
+            if (isValid) {
+                alert('Sign Up successful');
+            }
+        }
+    </script>
+</body>
+</html>

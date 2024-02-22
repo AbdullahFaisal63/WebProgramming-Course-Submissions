@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation with Bootstrap</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+        }
+        .btn-primary {
+             background-color: rgb(255, 70, 70);
+             border-color: rgb(255, 70, 70);
+             
+        }
+        .btn-primary:hover {
+             background-color: rgb(121, 33, 33);
+             border-color: rgb(121, 33, 33);
+             
+        }
+        #username {
+            border-color: rgb(121, 33, 33);
+        }
+        #username:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+        #password {
+            border-color: rgb(121, 33, 33);
+        }
+        #password:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25)
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Sign In</h1>
+        <br>
+        <form id="signInForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username">
+                <p id="usernameError" class="error"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+                <p id="passwordError" class="error"></p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+    </div>
+    <script>
+        const signInForm = document.getElementById('signInForm');
+
+        signInForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validateSignInForm();
+        });
+
+        function validateSignInForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            let isValid = true;
+
+            if (username === '') {
+                document.getElementById('usernameError').textContent = 'Username is required';
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').textContent = '';
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('passwordError').textContent = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character';
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            if (isValid) {
+                alert('Sign In successful');
+            }
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
